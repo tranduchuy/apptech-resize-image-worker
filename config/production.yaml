@@ -1,0 +1,33 @@
+# tính từ folder public
+tmpImgFolder: images/temps/
+staticImgFolder: images/
+
+app:
+  port: 3100
+
+sizes:
+  - 120x90
+  - 200x200
+  - 82x82
+  - 150x150
+  - 745x510
+  - 255x180
+  - 640x430
+  - 164x170
+
+tempSize:
+  width: 164
+  height: 170
+
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: admin
+  password: admin123
+
+mongo:
+  host: 159.89.202.248
+  username: admin
+  password: abc1233VF8YLwUWjegMwyxzLv3bFu2
+  port: 27017
+  databaseName: bds_v1

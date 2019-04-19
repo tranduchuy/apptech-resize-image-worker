@@ -1,0 +1,32 @@
+{
+  "name": "bds-img-transformer",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "start2": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "async": "^2.6.1",
+    "config": "^2.0.1",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "js-yaml": "^3.12.0",
+    "log4js": "^0.6.38",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.22.2",
+    "mongoose": "^5.2.18",
+    "morgan": "~1.9.0",
+    "multiparty": "^4.2.1",
+    "request": "^2.88.0",
+    "require-all": "^3.0.0",
+    "rich-filemanager-node": "^0.1.5",
+    "sharp": "^0.20.8",
+    "uniqid": "^5.0.3"
+  }
+}
