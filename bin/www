@@ -29,11 +29,7 @@ var server = http.createServer(app);
 
 server.on('error', onError);
 server.on('listening', onListening);
-
-require('../config/db')(() => {
-    console.log('Connect mongodb successfully');
-    server.listen(port);
-});
+server.listen(port);
 
 /**
  * Event listener for HTTP server "error" event.
