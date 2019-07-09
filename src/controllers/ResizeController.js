@@ -11,6 +11,7 @@ const {deleteFiles} = require('../utils/FileUtil');
 const log4js = require('log4js');
 const logger = log4js.getLogger('Controllers');
 const fileUtils = require('../utils/FileUtil');
+const sizeOf = require('image-size');
 
 const tempFolder = `${global.APP_DIR}/public/${config.get('tmpImgFolder')}`;
 
@@ -22,14 +23,26 @@ const uploadImage = async (req, res, next) => {
         form.parse(req);
 
         form.on('file', async (name, file) => {
-            const pathYMD = generateFolderTempByDate();
+            const imageInfo = sizeOf(file.path);
+            console.log(imageInfo);
+            if (['jpg', 'png'].indexOf(imageInfo.type) === -1) {
+                return next(new Error(`File type ${imageInfo.type} is not accepted. Only jpg,`));
+            }
 
+            if (imageInfo.height < 400 || imageInfo.width < 400) {
+                return next(new Error(`Image too small. At least 400px each dimension`));
+            }
+
+            if (imageInfo.width > imageInfo.height) {
+                return next(new Error(`Image should have height greater than equal width dimension`));
+            }
+
+            const pathYMD = generateFolderTempByDate();
             const demoFolderPath = `${tempFolder}/demo/${pathYMD}`;
             const originalFolderPath = `${tempFolder}/original/${pathYMD}`;
             const fileName = fileUtils.uniqueid();
-
-            const originalFilePath = `${originalFolderPath}/${fileName}`;
-            const demoFilePath = `${demoFolderPath}/${fileName}`;
+            const originalFilePath = `${originalFolderPath}/${fileName}.${imageInfo.type}`;
+            const demoFilePath = `${demoFolderPath}/${fileName}.${imageInfo.type}`;
 
             makeFolders([demoFolderPath, originalFolderPath], async (err) => {
                 if (err) {
@@ -42,7 +55,7 @@ const uploadImage = async (req, res, next) => {
                 // resize to demo size
                 const defaultSize = config.get('tempSize');
                 sharp(file.path)
-                    .resize(defaultSize.width, defaultSize.height)
+                    .resize(defaultSize.width)
                     .toFile(demoFilePath, (err) => {
                         if (err) {
                             logger.error('ResizeController::uploadImage sharp resize error', err);
@@ -54,7 +67,7 @@ const uploadImage = async (req, res, next) => {
                             status: HTTP_CODE.SUCCESS,
                             message: [],
                             data: {
-                                link: `${pathYMD}/${fileName}`
+                                link: `${pathYMD}/${fileName}.${imageInfo.type}`
                             }
                         });
                     });

@@ -3,3 +3,4 @@ public/images/
 .idea/
 .vscode/
 logs/
+package-lock.json

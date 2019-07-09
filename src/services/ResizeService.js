@@ -8,13 +8,7 @@ const {makeFolders} = require('../utils/FolderUtil');
 const {generateFolderTempByDate} = require('../utils/StringUtil');
 
 
-const sizes = config.get('sizes').map(str => {
-    var eles = str.split('x');
-    return {
-        width: parseInt(eles[0], 0),
-        height: parseInt(eles[1], 0)
-    }
-});
+const sizes = config.get('size_widths');
 
 const getFileName = (path) => {
     const eles = path.split('\/');
@@ -25,7 +19,14 @@ const getFileName = (path) => {
     return eles[eles.length - 1];
 };
 
-const resizeOneImage = (sourceFilePath, size, folderName, cb) => {
+/**
+ * 
+ * @param {string} sourceFilePath 
+ * @param {number} width 
+ * @param {string} folderName 
+ * @param {Function} cb 
+ */
+const resizeOneImage = (sourceFilePath, width, folderName, cb) => {
     const staticFolderImage = config.get('staticImgFolder');
     const newFileName = getFileName(sourceFilePath);
 
@@ -33,7 +34,7 @@ const resizeOneImage = (sourceFilePath, size, folderName, cb) => {
         return cb(new Error('File name not found'));
     }
 
-    const datePathFolderWithSize = generateFolderTempByDate(size);
+    const datePathFolderWithSize = generateFolderTempByDate(width);
     const datePathFolderNoSize = generateFolderTempByDate();
 
     const newFolderPath = `${global.APP_DIR}/public/${staticFolderImage}/${folderName}/${datePathFolderWithSize}`;
@@ -46,9 +47,10 @@ const resizeOneImage = (sourceFilePath, size, folderName, cb) => {
         let targetFile = `${newFolderPath}/${newFileName}`;
 
         sharp(sourceFilePath)
-            .resize(size.width, size.height)
+            .resize(width)
             .toFile(targetFile, (err) => {
                 if (err) {
+                    console.error(err);
                     return cb(err);
                 }
 
@@ -62,8 +64,8 @@ const resizeImageToMultipleSize = (sourceFilePath, folderName, callback) => {
         return callback(null, [null]);
     }
 
-    async.map(sizes, (size, cb) => {
-        resizeOneImage(sourceFilePath, size, folderName, cb);
+    async.map(sizes, (width, cb) => {
+        resizeOneImage(sourceFilePath, width, folderName, cb);
     }, callback);
 };
 

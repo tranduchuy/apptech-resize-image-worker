@@ -1,5 +1,5 @@
 global.APP_DIR = __dirname;
-
+require('./src/services/InitService');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');

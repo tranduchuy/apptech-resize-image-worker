@@ -29,8 +29,8 @@ const generateFileNameWithTime = (ext = 'jpg') => {
     ].join('');
 };
 
-// Return: <year>/<month>/<date>/<size>
-const generateFolderTempByDate = (size) => {
+// Return: <year>/<month>/<date>/<width>
+const generateFolderTempByDate = (width) => {
     const today = new Date();
     const month = today.getMonth() + 1;
     const date = today.getDate();
@@ -41,8 +41,8 @@ const generateFolderTempByDate = (size) => {
         fillEmptyCharacters(date, 2)
     ];
 
-    if (size) {
-        patterns.unshift(size.width + 'x' + size.height);
+    if (width) {
+        patterns.unshift(width);
     }
 
     return patterns.join('\/');
