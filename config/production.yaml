@@ -5,29 +5,21 @@ staticImgFolder: images/
 app:
   port: 3100
 
-sizes:
-  - 120x90
-  - 200x200
-  - 82x82
-  - 150x150
-  - 745x510
-  - 255x180
-  - 640x430
-  - 164x170
+size_widths:
+  - 400
+  - 600
+  - 800
+  - 1000
+  - 1200
+  - 1400
 
 tempSize:
-  width: 164
-  height: 170
+  width: 200
 
 rabbitmq:
-  host: localhost
+  host: 157.230.248.161
   port: 5672
   username: admin
   password: admin123
 
-mongo:
-  host: 159.89.202.248
-  username: admin
-  password: abc1233VF8YLwUWjegMwyxzLv3bFu2
-  port: 27017
-  databaseName: bds_v1
+mongoURI: mongodb+srv://flowerdev:4BI41P4Hg0dzAyOZ@cluster0-gifbk.mongodb.net/flower?retryWrites=true
