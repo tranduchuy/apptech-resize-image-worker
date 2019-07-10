@@ -93,8 +93,8 @@ const removeOldImages = (paths, cb) => {
     const fullPathToDelete = [];
 
     _paths.forEach(p => {
-        config.get('sizes').forEach((size) => {
-            fullPathToDelete.push(`${global.APP_DIR}/public/${staticImgFolder}using/${size}/${p}`);
+        sizes.forEach((width) => {
+            fullPathToDelete.push(`${global.APP_DIR}/public/${staticImgFolder}using/${width}/${p}`);
         });
     });
 
