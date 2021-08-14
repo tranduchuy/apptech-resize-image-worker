@@ -17,7 +17,7 @@ tempSize:
   width: 200
 
 rabbitmq:
-  host: 157.230.248.161
+  host: localhost
   port: 5672
   username: admin
   password: admin123
